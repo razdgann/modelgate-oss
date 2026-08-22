@@ -14,7 +14,8 @@ export function resolve(path, cfg) {
 }
 export function safeHeaders(incoming, definition) {
   const h=new Headers();
-  for(const [k,v] of Object.entries(incoming)) if(v && !['host','content-length','authorization','x-api-key','connection','x-modelgate-app','x-modelgate-user','x-modelgate-feature','x-modelgate-tags'].includes(k.toLowerCase())) h.set(k,Array.isArray(v)?v.join(','):v);
+  const blocked=['host','content-length','authorization','proxy-authorization','x-api-key','cookie','set-cookie','connection','keep-alive','proxy-authenticate','te','trailer','transfer-encoding','upgrade','x-modelgate-app','x-modelgate-user','x-modelgate-feature','x-modelgate-tags'];
+  for(const [k,v] of Object.entries(incoming)) if(v && !blocked.includes(k.toLowerCase())) h.set(k,Array.isArray(v)?v.join(','):v);
   const key=process.env[definition.env];
   if(key) definition.auth(key,h);
   return h;

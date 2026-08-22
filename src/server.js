@@ -1,7 +1,9 @@
 import http from 'node:http'; import { readFileSync } from 'node:fs'; import { fileURLToPath } from 'node:url'; import { dirname,join } from 'node:path';
 import { config } from './config.js'; import { Storage } from './storage.js'; import { proxy } from './proxy.js'; import { api } from './api.js';
 const cfg=config(), storage=new Storage(cfg.database), root=join(dirname(fileURLToPath(import.meta.url)),'dashboard');
-const serve=(req,res)=>{let file=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','app.js','style.css'].includes(file))file='index.html';const type=file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':'text/html';res.writeHead(200,{'content-type':type});res.end(readFileSync(join(root,file)))};
-const gateway=http.createServer((req,res)=>{if(req.url==='/health'||req.url.startsWith('/api/')){if(api(req,res,storage,cfg)!==false)return}proxy(req,res,{cfg,storage})});
-gateway.listen(cfg.port,()=>console.log(`ModelGate gateway and API listening on :${cfg.port}`));
-if(cfg.dashboardPort!==cfg.port)http.createServer((req,res)=>req.url.startsWith('/api/')||req.url==='/health'?api(req,res,storage,cfg):serve(req,res)).listen(cfg.dashboardPort,()=>console.log(`ModelGate dashboard listening on :${cfg.dashboardPort}`));
+const serve=(req,res)=>{let file=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','app.js','style.css'].includes(file))file='index.html';const type=file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':'text/html';res.writeHead(200,{'content-type':type,'x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'no-referrer','content-security-policy':"default-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"});res.end(readFileSync(join(root,file)))};
+const servers=[];
+const gateway=http.createServer((req,res)=>req.url==='/health'||req.url.startsWith('/api/')?api(req,res,storage,cfg):proxy(req,res,{cfg,storage}));servers.push(gateway);
+gateway.listen(cfg.port,cfg.host,()=>console.log(`ModelGate gateway and API listening on ${cfg.host}:${cfg.port}`));
+if(cfg.dashboardPort!==cfg.port){const dashboard=http.createServer((req,res)=>req.url.startsWith('/api/')||req.url==='/health'?api(req,res,storage,cfg):serve(req,res));servers.push(dashboard);dashboard.listen(cfg.dashboardPort,cfg.host,()=>console.log(`ModelGate dashboard listening on ${cfg.host}:${cfg.dashboardPort}`))}
+for(const signal of ['SIGTERM','SIGINT'])process.once(signal,()=>{let remaining=servers.length;const done=()=>{if(--remaining===0)process.exit(0)};for(const server of servers)server.close(done);setTimeout(()=>process.exit(1),10_000).unref()});
