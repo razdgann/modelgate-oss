@@ -1,0 +1,1 @@
+const runs=Number(process.argv[2]||1000), samples=[];for(let i=0;i<runs;i++){const t=performance.now();await fetch('http://localhost:8080/health');samples.push(performance.now()-t)}samples.sort((a,b)=>a-b);console.log({runs,p50_ms:samples[Math.floor(runs*.5)].toFixed(2),p95_ms:samples[Math.floor(runs*.95)].toFixed(2)});

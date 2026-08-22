@@ -1,0 +1,17 @@
+services:
+  modelgate:
+    build: .
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      MODELGATE_DATABASE_URL: /app/data/modelgate.db
+      MODELGATE_CAPTURE_CONTENT: ${MODELGATE_CAPTURE_CONTENT:-false}
+    volumes:
+      - modelgate-data:/app/data
+    restart: unless-stopped
+volumes:
+  modelgate-data:
