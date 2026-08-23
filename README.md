@@ -1,5 +1,7 @@
 # ModelGate OSS
 
+ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, advanced runtime protection, and automated optimization, visit [ModelGate](https://modelgatehq.com/).
+
 **A local-first LLM gateway for cost visibility, usage analytics, and basic runtime security.**
 
 Point the OpenAI or Anthropic SDK at ModelGate, keep normal provider responses—including streams—and inspect metadata locally at `http://localhost:3000`. No account required. Prompt and response content is **not stored by default**.
