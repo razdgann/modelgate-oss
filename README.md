@@ -2,6 +2,8 @@
 
 **A local-first LLM gateway for cost visibility, usage analytics, and basic heuristic security signals.**
 
+ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, advanced runtime protection, and automated optimization, visit [ModelGate](https://modelgatehq.com/).
+
 > **Early release — v0.1.0.** APIs and storage may change. Not yet recommended for critical production workloads without your own validation.
 
 ![ModelGate dashboard showing clearly labeled deterministic demo traffic](docs/assets/dashboard-overview.png)
