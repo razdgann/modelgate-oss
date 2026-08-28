@@ -4,15 +4,13 @@
 
 **NOT READY**
 
-The local release candidate is substantially hardened and passes its available checks, but owner-controlled GitHub and credential blockers must be resolved before public launch.
+The hardened candidate is pushed to the private repository and passes local tests, Docker health verification, and GitHub CI. Only owner-controlled credential, legal, and final-publication confirmations remain.
 
 ## Critical blockers
 
-1. **The GitHub repository is already PUBLIC.** The required pre-release state was private. No visibility change was made automatically. The owner should make it private immediately while reviewing this release candidate.
-2. **Private vulnerability reporting is disabled.** Enable GitHub private vulnerability reporting before returning the repository to public visibility.
-3. **The OpenAI test key was pasted into a conversation.** It was never written to the repository, database, command line, or Git history, but it must still be revoked and replaced with a dedicated development key before release.
-
-Docker execution could not be performed because Docker is not installed in the audit environment. This is not classified as a code blocker because CI builds the image, but the owner must require a passing container job and manually exercise `docker compose up --build` before release.
+1. **Credential rotation requires owner confirmation.** The OpenAI test key pasted into a conversation was never written to the repository, database, command line, or Git history, but it must be revoked before release.
+2. **License/ownership requires owner confirmation.** Confirm Apache-2.0 and the neutral ModelGate project notice with the appropriate owner/legal reviewer.
+3. **Private vulnerability reporting must be enabled when public.** GitHub's endpoint is unavailable while this repository is private; enable and verify the setting immediately after changing visibility.
 
 ## Changes made
 
@@ -67,8 +65,9 @@ The OSS security engine contains five straightforward public regex rules with ex
 
 - Dockerfile uses the official Node Alpine image, copies only runtime files, runs as `node`, and prepares a node-owned SQLite data directory.
 - Compose exposes the documented ports, persists `/app/data`, includes a health check, supports an optional `.env`, and runs one service.
-- Docker/Compose and CI YAML syntax was statically checked.
-- **Not executed locally:** Docker is not installed in this environment. A passing CI container build and owner-run Compose smoke test are required.
+- Docker/Compose and CI YAML syntax was checked.
+- Docker 29.7.2 / Compose 5.4.0 built the image, created the network and persistent volume, started the service, and reported the container healthy.
+- Gateway health returned `status: ok`, metadata-only capture, demo mode off, and telemetry disabled; the dashboard returned HTTP 200.
 
 ## Installation verification
 
@@ -113,9 +112,7 @@ The README now includes the product/value proposition, current screenshot, main 
 
 ## GitHub topics
 
-The repository currently has no topics. They were not applied because the repository is unexpectedly public while the release candidate is `NOT READY`.
-
-Apply after making the repository private and reviewing the candidate:
+The private repository has the exact intended topics:
 
 `llm`, `openai`, `anthropic`, `llm-gateway`, `llm-observability`, `ai-security`, `prompt-injection`, `developer-tools`, `open-source`
 
@@ -130,17 +127,14 @@ Apply after making the repository private and reviewing the candidate:
 
 Complete these in order:
 
-1. Revoke the OpenAI key pasted into the conversation and create a dedicated restricted development/testing key if further live testing is needed.
-2. Change `razdgann/modelgate-oss` from **Public** to **Private immediately**; verify no unintended fork/cache exposure needs separate handling.
-3. Enable GitHub **Private vulnerability reporting**.
-4. Review this report, the complete diff, and `docs/assets/dashboard-overview.png`.
-5. Confirm the Apache-2.0 choice and neutral copyright/NOTICE wording with the appropriate owner/legal reviewer.
-6. Commit/push the hardened candidate only while the repository is private, then require passing CI including the Docker image job.
-7. Run `cp .env.example .env && docker compose up --build` on a machine with Docker; verify ports 8080/3000 and persistent SQLite after restart.
-8. Apply the nine GitHub topics listed above and review repository description/social preview.
-9. Optionally capture and review the clearly labeled demo GIF.
-10. Only after every blocker is closed, deliberately switch visibility to Public.
-11. Create the GitHub release/tag `v0.1.0` from the reviewed commit; do not label it stable or production-ready.
+1. Confirm the OpenAI key pasted into the conversation has been revoked; use a dedicated restricted development key for any further live testing.
+2. Review this report, the final diff, and `docs/assets/dashboard-overview.png`.
+3. Confirm the Apache-2.0 choice and neutral copyright/NOTICE wording with the appropriate owner/legal reviewer.
+4. Review the successful GitHub CI run for the final commit, including the Docker image job.
+5. Optionally capture and review the clearly labeled demo GIF and repository social preview.
+6. Deliberately switch visibility to Public only after the confirmations above.
+7. Immediately enable and verify GitHub **Private vulnerability reporting** after the repository becomes public.
+8. Create the GitHub release/tag `v0.1.0` from the reviewed commit; do not label it stable or production-ready.
 
 ## Known limitations
 
@@ -151,8 +145,7 @@ Complete these in order:
 - Repetition analysis groups exact normalized content, not semantic similarity.
 - Provider endpoint/event compatibility is useful but not exhaustive.
 - Node's built-in SQLite API emits an experimental warning in the tested Node runtime.
-- Docker was statically reviewed but not run in this environment.
 
 ## Final recommendation
 
-**Do not announce, tag, or treat the repository as release-ready yet.** Make the already-public repository private, rotate the exposed test key, enable private vulnerability reporting, review the local hardened candidate, and complete the Docker/CI gate. After those owner actions pass, the codebase is a credible v0.1.0 candidate for deliberate publication.
+**Do not announce or tag until the three owner confirmations are complete:** credential rotation, license/ownership approval, and final review. Docker, CI, privacy behavior, documentation, topics, and the private hardened branch are ready. After those confirmations, deliberately publish the repository, enable private vulnerability reporting, and create the `v0.1.0` release.
