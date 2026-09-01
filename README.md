@@ -5,8 +5,8 @@
 ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, advanced runtime protection, and automated optimization, visit [ModelGate](https://modelgatehq.com/).
 
 > **Early release — v0.1.0.** APIs and storage may change. Not yet recommended for critical production workloads without your own validation.
->
-> Point your SDK at ModelGate and immediately see:
+
+Point your SDK at ModelGate and immediately see:
 
 • what every LLM request costs
 • which requests repeat
