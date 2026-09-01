@@ -8,10 +8,10 @@ ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, 
 
 Point your SDK at ModelGate and immediately see:
 
-• what every LLM request costs\n
-• which requests repeat
-• where unnecessary LLM usage may be hiding
-• suspicious prompt-injection patterns
+• what every LLM request costs.
+• which requests repeat.
+• where unnecessary LLM usage may be hiding.
+• suspicious prompt-injection patterns.
 
 Local-first. No account required. Prompt content is not stored by default.
 
