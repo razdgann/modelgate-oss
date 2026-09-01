@@ -1,17 +1,17 @@
 # ModelGate OSS
 
-**ModelGate is an open-source gateway for OpenAI and Anthropic that tracks cost, latency, repetition and security signals without changing your provider integration..**
+****Find repetitive and expensive LLM traffic that may not need to stay an LLM call..**
 
 ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, advanced runtime protection, and automated optimization, visit [ModelGate](https://modelgatehq.com/).
 
 > **Early release — v0.1.0.** APIs and storage may change. Not yet recommended for critical production workloads without your own validation.
 
-Point your SDK at ModelGate and immediately see:
+## Point your SDK at ModelGate and immediately see:
 
-• what every LLM request costs.
-• which requests repeat.
-• where unnecessary LLM usage may be hiding.
-• suspicious prompt-injection patterns.
+- what every LLM request costs.
+- which requests repeat.
+- where unnecessary LLM usage may be hiding.
+- suspicious prompt-injection patterns.
 
 Local-first. No account required. Prompt content is not stored by default.
 
@@ -30,6 +30,7 @@ Point an OpenAI or Anthropic SDK at ModelGate, keep normal provider responses—
 - Embedded SQLite storage and a searchable local dashboard
 - No ModelGate account, Cloud connection, or external analytics
 
+## From zero to your first traced LLM request in ~2 minutes
 ## Two-minute Docker quick start
 
 ```bash
