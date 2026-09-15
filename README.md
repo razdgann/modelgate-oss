@@ -85,7 +85,7 @@ ModelGate OSS contains no outbound ModelGate Cloud client and sends no product t
 
 ## Estimated costs
 
-Costs are estimates from the dated central registry in `src/pricing/registry.js`. Every entry includes an effective date, review date, and official provider pricing source. Provider billing may differ because of cached tokens, batch pricing, tiers, regional pricing, or later price changes. Unknown models continue normally and display no estimate.
+Costs are estimates from the dated central registry in `src/pricing/registry.js`. Every entry includes an effective date, review date, and official provider pricing source. The registry includes the current OpenAI flagship and Claude model families reviewed on September 15, 2026, plus historical entries. It is a pricing catalog, not a model availability list. Provider billing may differ because of cached tokens and cache writes, batch/fast pricing, long-context tiers, tool fees, regional pricing, or later price changes. Estimates use base standard text-token rates; these adjustments are not calculated. Unknown models continue normally and display no estimate. Updates require installing the updated project and restarting the service; existing stored costs are not recalculated. See [maintenance](docs/maintenance.md) for the review process.
 
 ## Architecture
 

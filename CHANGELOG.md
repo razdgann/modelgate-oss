@@ -4,6 +4,9 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/).
 
 ## Unreleased
 
+- Add base cost estimates for eight current OpenAI and Claude models, verified against official pricing on 2026-09-15.
+- Document model/pricing maintenance, estimate limitations, and rollout behavior.
+
 ## v0.1.0 - 2026-08-22
 
 - Initial OpenAI and Anthropic streaming gateway
