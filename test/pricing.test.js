@@ -2,8 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PRICES, estimate } from '../src/pricing/registry.js';
 
-test('current standard base rates match the September provider review', () => {
+test('reviewed and historical standard base rates remain stable', () => {
   for (const [provider, model, input, output] of [
+    ['openai', 'gpt-6.1-sol', 2, 10],
+    ['openai', 'gpt-6-luna', .1, .5],
+    ['anthropic', 'claude-opus-5-5', 4, 20],
+    ['anthropic', 'claude-sonnet-5-5', 2, 10],
+    ['anthropic', 'claude-haiku-5-5', .1, .5],
     ['openai', 'gpt-6-astra', 10, 50],
     ['openai', 'gpt-5.6-sol', 4, 20],
     ['openai', 'gpt-5.6-terra', 2, 12],
@@ -32,4 +37,13 @@ test('registry IDs are unambiguous and aliases preserve estimates', () => {
   }
   assert.equal(estimate('anthropic', 'gpt-6-astra', 1000, 1000).total, null);
   assert.equal(estimate('openai', 'gpt-6-astra-unverified', 1000, 1000).total, null);
+});
+
+ test('review dates do not rewrite when a rate became effective', () => {
+  const astra = PRICES.find(p => p.model === 'gpt-6-astra');
+  assert.equal(astra.effective, '2026-09-15');
+  assert.equal(astra.reviewed, '2026-10-15');
+  const terra = PRICES.find(p => p.model === 'gpt-5.6-terra');
+  assert.equal(terra.reviewed, '2026-09-15');
+  assert.equal(estimate('anthropic', 'claude-sonnet-5-5-unverified', 1, 1).total, null);
 });

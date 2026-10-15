@@ -1,19 +1,25 @@
 const PER_MILLION = 1_000_000;
 // Standard text-token rates in USD. See docs/maintenance.md for scope and review steps.
 // effective is when this registry starts applying a rate, not a claimed launch date.
-const reviewed = '2026-09-15';
-function price(provider, model, input, output, aliases = []) {
+const reviewed = '2026-10-15';
+function price(provider, model, input, output, aliases = [], effective = '2026-09-15', reviewDate = reviewed) {
   return { provider, model, input:input/PER_MILLION, output:output/PER_MILLION,
-    effective:reviewed, reviewed, source:provider === 'openai'
+    effective, reviewed:reviewDate, source:provider === 'openai'
       ? 'https://developers.openai.com/api/docs/pricing'
       : 'https://platform.claude.com/docs/en/about-claude/pricing', aliases,
     scope:'Standard text tokens; base input/output rates only' };
 }
 export const PRICES = [
+  price('openai', 'gpt-6.1-sol', 2, 10, [], '2026-10-15'),
+  price('openai', 'gpt-6-luna', .1, .5, [], '2026-10-15'),
+  price('anthropic', 'claude-opus-5-5', 4, 20, [], '2026-10-15'),
+  price('anthropic', 'claude-sonnet-5-5', 2, 10, [], '2026-10-15'),
+  { ...price('anthropic', 'claude-haiku-5-5', .1, .5, [], '2026-10-15'),
+    scope:'Standard text tokens; base rates for prompts up to 100,000 tokens only; higher prompt-length tier not calculated' },
   price('openai', 'gpt-6-astra', 10, 50),
   price('openai', 'gpt-5.6-sol', 4, 20),
-  price('openai', 'gpt-5.6-terra', 2, 12),
-  price('openai', 'gpt-5.6-luna', .2, 1.2),
+  price('openai', 'gpt-5.6-terra', 2, 12, [], '2026-09-15', '2026-09-15'),
+  price('openai', 'gpt-5.6-luna', .2, 1.2, [], '2026-09-15', '2026-09-15'),
   price('anthropic', 'claude-fable-5-1', 10, 50),
   price('anthropic', 'claude-opus-5', 5, 25),
   price('anthropic', 'claude-sonnet-5', 2, 10),

@@ -35,4 +35,26 @@ service tiers, regional premiums, and tool/media charges are not calculated.
 The registry is intentionally not a complete provider catalog. Unrecognized IDs
 continue forwarding with a null estimate, never a guessed price.
 
-This is a manual review process; no automatic price synchronization is configured.
+A monthly Codex task reviews official sources, runs the checks, and commits and pushes verified updates to main. Runtime pricing does not synchronize automatically.
+
+
+## Review on 2026-10-15
+
+Added GPT-6.1 Sol ($2/$10), GPT-6 Luna ($0.10/$0.50), Claude Opus 5.5
+($4/$20), Sonnet 5.5 ($2/$10), and Haiku 5.5 ($0.10/$0.50), in USD per
+million input/output tokens. Sources are the official pricing pages above and
+[Claude model IDs](https://platform.claude.com/docs/en/models/overview).
+Reverified Astra, GPT-5.6 Sol, Fable 5.1, Opus 5, Sonnet 5 and Haiku 4.5
+without changing their rates or effective dates. Other historical review dates remain unchanged.
+
+Haiku 5.5 base rates apply only up to 100,000 prompt tokens; above this,
+its rates are $0.50/$2.50. Prompt length includes cache reads and writes.
+This tier adjustment is not calculated by the current estimator. Fast/ultrafast,
+caching, regional premiums and tool fees also remain outside its scope.
+
+[OpenAI deprecations](https://developers.openai.com/api/docs/deprecations)
+now list the GPT-4o November 2024 and GPT-4o mini July 2024 snapshots in this
+registry for shutdown January 14, 2027.
+[Claude deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations)
+list Sonnet 4.5 for retirement November 30, 2026 and Haiku 3.5 as already retired.
+Historical pricing entries are retained; requests are never automatically migrated.
