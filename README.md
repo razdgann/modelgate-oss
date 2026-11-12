@@ -2,6 +2,8 @@
 
 ****Find repetitive and expensive LLM traffic that may not need to stay an LLM call..**
 
+[![ModelGate on StartupScores](https://startupscores.com/badge/modelgate.svg?style=shield&v=combo&theme=dark)](https://startupscores.com/open-source/modelgate)
+
 ModelGate OSS is the open-source gateway from ModelGate. For managed analytics, advanced runtime protection, and automated optimization, visit [ModelGate](https://modelgatehq.com/).
 
 > **Early release — v0.1.0.** APIs and storage may change. Not yet recommended for critical production workloads without your own validation.
