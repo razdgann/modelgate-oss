@@ -4,6 +4,8 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/).
 
 ## Unreleased
 
+- November 2026 review: add GPT-6.1 Terra and Claude Fable 5.2 base rates and refresh verified pricing metadata.
+
 - October 2026 review: add GPT-6.1 Sol, GPT-6 Luna, and Claude Opus/Sonnet/Haiku 5.5 base rates; preserve effective dates during pricing reviews and document deprecations.
 
 - Add base cost estimates for eight current OpenAI and Claude models, verified against official pricing on 2026-09-15.

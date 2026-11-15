@@ -4,6 +4,8 @@ import { PRICES, estimate } from '../src/pricing/registry.js';
 
 test('reviewed and historical standard base rates remain stable', () => {
   for (const [provider, model, input, output] of [
+    ['openai', 'gpt-6.1-terra', 1, 5],
+    ['anthropic', 'claude-fable-5-2', 8, 40],
     ['openai', 'gpt-6.1-sol', 2, 10],
     ['openai', 'gpt-6-luna', .1, .5],
     ['anthropic', 'claude-opus-5-5', 4, 20],
@@ -42,7 +44,7 @@ test('registry IDs are unambiguous and aliases preserve estimates', () => {
  test('review dates do not rewrite when a rate became effective', () => {
   const astra = PRICES.find(p => p.model === 'gpt-6-astra');
   assert.equal(astra.effective, '2026-09-15');
-  assert.equal(astra.reviewed, '2026-10-15');
+  assert.equal(astra.reviewed, '2026-11-15');
   const terra = PRICES.find(p => p.model === 'gpt-5.6-terra');
   assert.equal(terra.reviewed, '2026-09-15');
   assert.equal(estimate('anthropic', 'claude-sonnet-5-5-unverified', 1, 1).total, null);

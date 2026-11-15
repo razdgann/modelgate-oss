@@ -58,3 +58,19 @@ registry for shutdown January 14, 2027.
 [Claude deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations)
 list Sonnet 4.5 for retirement November 30, 2026 and Haiku 3.5 as already retired.
 Historical pricing entries are retained; requests are never automatically migrated.
+
+
+## Review on 2026-11-15
+
+Added `gpt-6.1-terra` ($1 input / $5 output) and `claude-fable-5-2`
+($8 input / $40 output), per million standard text tokens, using the official
+pricing pages and Claude model overview linked above. No snapshot aliases were guessed.
+Reverified the existing GPT-6 and Claude entries without changing their rates or
+effective dates. Older GPT-5.6 and historical entries retain their earlier review dates.
+
+The official deprecation pages still list Sonnet 4.5 for November 30 retirement;
+Claude 3.5 Sonnet and Haiku are already retired. Historical estimates remain available.
+OpenAI's pricing page says GPT-5.6 Sol promotional pricing ends November 30;
+no unverified future rate has been substituted. Review it again after that date.
+All previously documented cache, context-length, service-tier, region and tool-fee
+limitations remain in effect; this update adds base rates only.
