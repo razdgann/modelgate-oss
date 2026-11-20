@@ -2,8 +2,8 @@ services:
   modelgate:
     build: .
     ports:
-      - "8080:8080"
-      - "3000:3000"
+      - "${MODELGATE_PUBLISH_HOST:-127.0.0.1}:8080:8080"
+      - "${MODELGATE_PUBLISH_HOST:-127.0.0.1}:3000:3000"
     env_file:
       - path: .env
         required: false

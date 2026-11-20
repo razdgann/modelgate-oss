@@ -45,6 +45,8 @@ docker compose up --build
 - Dashboard: [http://localhost:3000](http://localhost:3000)
 - Health check: [http://localhost:8080/health](http://localhost:8080/health)
 
+Docker Compose publishes both ports on the host’s IPv4 loopback interface by default.
+
 SQLite initializes automatically and persists in the `modelgate-data` Docker volume. No external database or production infrastructure is required.
 
 For local development without Docker, install Node.js 22.5+ (24 recommended), run `npm start`, and use the same URLs.
@@ -96,6 +98,7 @@ A single dependency-free Node.js service performs provider-aware forwarding and 
 | Variable | Default | Purpose |
 |---|---:|---|
 | `MODELGATE_HOST` | `127.0.0.1` | Bind address; Compose sets `0.0.0.0` inside the container |
+| `MODELGATE_PUBLISH_HOST` | `127.0.0.1` | Host address for the ports published by Docker Compose |
 | `MODELGATE_PORT` | `8080` | Gateway/API port |
 | `MODELGATE_DASHBOARD_PORT` | `3000` | Dashboard port |
 | `MODELGATE_DATABASE_URL` | `./data/modelgate.db` | SQLite path |
@@ -110,7 +113,7 @@ A single dependency-free Node.js service performs provider-aware forwarding and 
 
 The gateway constructs requests only from configured provider origins; it is not an arbitrary URL proxy. Incoming credentials, proxy credentials, cookies, hop-by-hop headers, and ModelGate metadata headers are not forwarded indiscriminately or stored. Request bodies are limited to 10 MiB by default and provider calls time out.
 
-The dashboard and API have no built-in authentication in v0.1. Keep the default loopback binding for local use. If exposing ModelGate beyond a trusted machine, put authenticated TLS termination in front of both ports, restrict network access, encrypt disks/backups, configure retention, and protect `.env`. See [SECURITY.md](SECURITY.md).
+The dashboard and API have no built-in authentication in v0.1. Keep the default loopback binding for local use. To serve remote clients, put an authenticated TLS reverse proxy in front of both ports. If your proxy needs to reach the published ports on a different host interface, set `MODELGATE_PUBLISH_HOST` in the Compose project’s `.env` to that host interface’s address and restrict direct access to the ports to the proxy. Encrypt disks and backups, configure retention, and protect `.env`. See [SECURITY.md](SECURITY.md).
 
 Security findings are simple, public regex heuristics. “Informational,” “suspicious,” and “high risk” describe a matched pattern's apparent intent—not certainty, exploitability, or complete prompt-injection protection.
 
